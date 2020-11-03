@@ -15,25 +15,21 @@ public class GreetingController {
     @Autowired
     private MessageService messageService;
 
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required = false, defaultValue = "World")String name,
-                           Map<String, Object> model) {
-        model.put("name", name);
+    @GetMapping("/")
+    public String greeting(Map<String, Object> model) {
         return "greeting";
     }
-    @GetMapping
+
+    @GetMapping("/main")
     public String main(Map<String, Object> model) {
         Iterable<Message> messages = messageService.findAll();
         model.put("messages", messages);
         return "main";
     }
-    @PostMapping
+    @PostMapping("/main")
     public String add(Map<String, Object> map, @RequestParam(name = "text") String text,
                       @RequestParam(name = "tag") String tag) {
-        Message message = new Message();
-        message.setTag(tag);
-        message.setText(text);
-        messageService.addMessage(message);
+        messageService.addMessage(text, tag);
         Iterable<Message> messages = messageService.findAll();
         map.put("messages", messages);
         return "main";

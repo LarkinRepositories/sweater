@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class MessageServiceImpl implements MessageService {
-    private MessageRepository messageRepository;
+    private final MessageRepository messageRepository;
 
     @Autowired
     public MessageServiceImpl(MessageRepository messageRepository) {
@@ -20,7 +20,10 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message addMessage(Message message) {
+    public Message addMessage(String text, String tag) {
+        Message message = new Message();
+        message.setText(text);
+        message.setTag(tag);
         message.setCreated(LocalDateTime.now());
         message.setUpdated(LocalDateTime.now());
         message.setStatus(Status.ACTIVE);
