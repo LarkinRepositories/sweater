@@ -5,30 +5,18 @@ import java.util.Objects;
 
 @Entity
 public class Message extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(name = "text")
     private String text;
     @Column(name = "tag")
     private String tag;
 
 
-    public Message(Long id, String text, String tag) {
-        this.id = id;
+    public Message(String text, String tag) {
         this.text = text;
         this.tag = tag;
     }
 
     public Message() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getText() {

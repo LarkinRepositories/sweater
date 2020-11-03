@@ -7,6 +7,9 @@ import java.util.Set;
 @Entity
 @Table(name = "usr")
 public class User extends BaseEntity {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "password")
@@ -15,7 +18,8 @@ public class User extends BaseEntity {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-
+    @Column(name = "active")
+    private boolean active;
     public User(String name, String password) {
         this.name = name;
         this.password = password;
@@ -41,6 +45,14 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -48,6 +60,7 @@ public class User extends BaseEntity {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -63,5 +76,15 @@ public class User extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), name, password, roles);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + super.getId() +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }
