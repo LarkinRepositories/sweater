@@ -6,6 +6,9 @@ import com.example.sweater.model.User;
 import com.example.sweater.repository.UserRepository;
 import com.example.sweater.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -49,5 +52,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return null;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userRepository.findByName(s);
     }
 }

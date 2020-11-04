@@ -1,8 +1,10 @@
 package com.example.sweater.controller;
 
 import com.example.sweater.model.Message;
+import com.example.sweater.model.User;
 import com.example.sweater.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +14,11 @@ import java.util.Map;
 
 @Controller
 public class GreetingController {
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
+
+    public GreetingController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {
@@ -27,11 +32,11 @@ public class GreetingController {
         return "main";
     }
     @PostMapping("/main")
-    public String add(Map<String, Object> map, @RequestParam(name = "text") String text,
+    public String add(@AuthenticationPrincipal User user, Map<String, Object> model, @RequestParam(name = "text") String text,
                       @RequestParam(name = "tag") String tag) {
-        messageService.addMessage(text, tag);
+        messageService.addMessage(text, tag, user);
         Iterable<Message> messages = messageService.findAll();
-        map.put("messages", messages);
+        model.put("messages", messages);
         return "main";
     }
     @PostMapping("/filter")

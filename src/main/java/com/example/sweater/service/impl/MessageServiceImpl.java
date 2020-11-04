@@ -2,6 +2,7 @@ package com.example.sweater.service.impl;
 
 import com.example.sweater.model.Message;
 import com.example.sweater.model.Status;
+import com.example.sweater.model.User;
 import com.example.sweater.repository.MessageRepository;
 import com.example.sweater.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message addMessage(String text, String tag) {
-        Message message = new Message();
-        message.setText(text);
-        message.setTag(tag);
+    public Message addMessage(String text, String tag, User user) {
+        Message message = new Message(text, tag, user);
         message.setCreated(LocalDateTime.now());
         message.setUpdated(LocalDateTime.now());
         message.setStatus(Status.ACTIVE);
