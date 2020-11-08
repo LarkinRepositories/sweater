@@ -11,9 +11,6 @@ import java.util.Set;
 @Entity
 @Table(name = "usr")
 public class User extends BaseEntity implements UserDetails {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "password")
@@ -24,6 +21,7 @@ public class User extends BaseEntity implements UserDetails {
     private Set<Role> roles;
     @Column(name = "active")
     private boolean active;
+
     public User(String name, String password) {
         this.name = name;
         this.password = password;
